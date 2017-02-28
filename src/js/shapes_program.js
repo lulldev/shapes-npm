@@ -1,34 +1,6 @@
 function ShapeProgram (canvasAreaId) {
     canvasAreaId === undefined ? this.canvasAreaId = "canvas-area" : this.canvasAreaId = canvasAreaId;
-
-    this.LoadScript('js/shapes/shape.js');
-    this.LoadScript('js/shapes/circle.js');
-    this.LoadScript('js/shapes/rectangle.js');
-    this.LoadScript('js/shapes/shape.js');
-    this.LoadScript('js/shapes/triangle.js');
-
-    this.LoadScript('js/program/events.js');
 }
-
-/*
- Loader solution by joshuamabina
- http://stackoverflow.com/questions/950087/how-do-i-include-a-javascript-file-in-another-javascript-file
- */
-ShapeProgram.prototype.LoadScript = function (url, callback) {
-    // Adding the script tag to the head as suggested before
-    var head = document.getElementsByTagName('head')[0];
-    var script = document.createElement('script');
-    script.type = 'text/javascript';
-    script.src = url;
-
-    // Then bind the event to the callback function.
-    // There are several events for cross browser compatibility.
-    script.onreadystatechange = callback;
-    script.onload = callback;
-
-    // Fire the loading
-    head.appendChild(script);
-};
 
 ShapeProgram.prototype.GetFormCollection = function () {
     return {
@@ -69,82 +41,85 @@ ShapeProgram.prototype.DisplayShape = function (shapeObj, shapeColorParams, shap
 
 var shapeProgram = new ShapeProgram();
 
-/**
- * Select shape type and show shape params form
- */
-document.getElementsByClassName('shape-type')[0].addEventListener("change", function () {
-    var shapeControlForms = shapeProgram.GetFormCollection();
+window.onload = function () {
 
-    var selectedType = this.value.toString();
+    /**
+     * Select shape type and show shape params form
+     */
+    document.getElementsByClassName('shape-type')[0].addEventListener("change", function () {
+        var shapeControlForms = shapeProgram.GetFormCollection();
 
-    switch (selectedType) {
-        case "circle":
-            shapeProgram.ResetForm();
-            shapeControlForms.circleForm.style.display = "block";
-            break;
-        case "rectangle":
-            shapeProgram.ResetForm();
-            shapeControlForms.rectangleForm.style.display = "block";
-            break;
-        case "triangle":
-            shapeProgram.ResetForm();
-            shapeControlForms.triangleForm.style.display = "block";
-            break;
-    }
+        var selectedType = this.value.toString();
 
-    shapeControlForms.colorForm.style.display = "block";
-    shapeControlForms.actionControl.style.display = "block";
+        switch (selectedType) {
+            case "circle":
+                shapeProgram.ResetForm();
+                shapeControlForms.circleForm.style.display = "block";
+                break;
+            case "rectangle":
+                shapeProgram.ResetForm();
+                shapeControlForms.rectangleForm.style.display = "block";
+                break;
+            case "triangle":
+                shapeProgram.ResetForm();
+                shapeControlForms.triangleForm.style.display = "block";
+                break;
+        }
 
-});
+        shapeControlForms.colorForm.style.display = "block";
+        shapeControlForms.actionControl.style.display = "block";
 
-/**
- * Hide all control forms
- */
-document.getElementsByClassName('reset-configurator')[0].addEventListener("click", function () {
-    shapeProgram.ResetForm();
-});
+    });
 
-/**
- * Draw action
- */
-document.getElementsByClassName('draw-shape')[0].addEventListener("click", function () {
-    var selectedType = document.getElementsByClassName('shape-type')[0].value.toString();
-    var shapeColorParams = {
-        fillColorValue: document.getElementsByClassName('fill-color')[0].value.toString(),
-        borderColorValue: document.getElementsByClassName('border-color')[0].value.toString()
-    };
-    var shapeParams = {};
+    /**
+     * Hide all control forms
+     */
+    document.getElementsByClassName('reset-configurator')[0].addEventListener("click", function () {
+        shapeProgram.ResetForm();
+    });
 
-    switch (selectedType) {
-        case "circle":
-            shapeParams = {
-                radius: parseFloat(document.getElementsByClassName('radius')[0].value.toString()),
-                centerX: parseFloat(document.getElementsByClassName('circle-x-coord')[0].value.toString()),
-                centerY: parseFloat(document.getElementsByClassName('circle-y-coord')[0].value.toString())
-            };
-            shapeProgram.DisplayShape(CCircle, shapeColorParams, shapeParams);
+    /**
+     * Draw action
+     */
+    document.getElementsByClassName('draw-shape')[0].addEventListener("click", function () {
+        var selectedType = document.getElementsByClassName('shape-type')[0].value.toString();
+        var shapeColorParams = {
+            fillColorValue: document.getElementsByClassName('fill-color')[0].value.toString(),
+            borderColorValue: document.getElementsByClassName('border-color')[0].value.toString()
+        };
+        var shapeParams = {};
 
-            break;
-        case "rectangle":
-            shapeParams = {
-                x1: parseFloat(document.getElementsByClassName('rectangle-x1-coord')[0].value.toString()),
-                y1: parseFloat(document.getElementsByClassName('rectangle-y1-coord')[0].value.toString()),
-                x2: parseFloat(document.getElementsByClassName('rectangle-x2-coord')[0].value.toString()),
-                y2: parseFloat(document.getElementsByClassName('rectangle-y2-coord')[0].value.toString())
-            };
-            shapeProgram.DisplayShape(CRectangle, shapeColorParams, shapeParams);
+        switch (selectedType) {
+            case "circle":
+                shapeParams = {
+                    radius: parseFloat(document.getElementsByClassName('radius')[0].value.toString()),
+                    centerX: parseFloat(document.getElementsByClassName('circle-x-coord')[0].value.toString()),
+                    centerY: parseFloat(document.getElementsByClassName('circle-y-coord')[0].value.toString())
+                };
+                shapeProgram.DisplayShape(CCircle, shapeColorParams, shapeParams);
 
-            break;
-        case "triangle":
-            shapeParams = {
-                x1: parseFloat(document.getElementsByClassName('triangle-x1-coord')[0].value.toString()),
-                y1: parseFloat(document.getElementsByClassName('triangle-y1-coord')[0].value.toString()),
-                x2: parseFloat(document.getElementsByClassName('triangle-x2-coord')[0].value.toString()),
-                y2: parseFloat(document.getElementsByClassName('triangle-y2-coord')[0].value.toString()),
-                x3: parseFloat(document.getElementsByClassName('triangle-x3-coord')[0].value.toString()),
-                y3: parseFloat(document.getElementsByClassName('triangle-y3-coord')[0].value.toString())
-            };
-            shapeProgram.DisplayShape(CTriangle, shapeColorParams, shapeParams);
-            break;
-    }
-});
+                break;
+            case "rectangle":
+                shapeParams = {
+                    x1: parseFloat(document.getElementsByClassName('rectangle-x1-coord')[0].value.toString()),
+                    y1: parseFloat(document.getElementsByClassName('rectangle-y1-coord')[0].value.toString()),
+                    x2: parseFloat(document.getElementsByClassName('rectangle-x2-coord')[0].value.toString()),
+                    y2: parseFloat(document.getElementsByClassName('rectangle-y2-coord')[0].value.toString())
+                };
+                shapeProgram.DisplayShape(CRectangle, shapeColorParams, shapeParams);
+
+                break;
+            case "triangle":
+                shapeParams = {
+                    x1: parseFloat(document.getElementsByClassName('triangle-x1-coord')[0].value.toString()),
+                    y1: parseFloat(document.getElementsByClassName('triangle-y1-coord')[0].value.toString()),
+                    x2: parseFloat(document.getElementsByClassName('triangle-x2-coord')[0].value.toString()),
+                    y2: parseFloat(document.getElementsByClassName('triangle-y2-coord')[0].value.toString()),
+                    x3: parseFloat(document.getElementsByClassName('triangle-x3-coord')[0].value.toString()),
+                    y3: parseFloat(document.getElementsByClassName('triangle-y3-coord')[0].value.toString())
+                };
+                shapeProgram.DisplayShape(CTriangle, shapeColorParams, shapeParams);
+                break;
+        }
+    });
+};
