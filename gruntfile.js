@@ -3,6 +3,15 @@ module.exports = function (grunt) {
     grunt.initConfig({
         pkg: grunt.file.readJSON('package.json'),
 
+        connect: {
+            server: {
+                options: {
+                    port: 2000,
+                    base: ''
+                }
+            }
+        },
+
         concat: {
             dist: {
                 src: [
@@ -32,6 +41,31 @@ module.exports = function (grunt) {
                     ]
                 }
             }
+        },
+
+        watch: {
+            css: {
+                files: ['src/css/**/*.*'],
+                tasks: ['cssmin'],
+                options: {
+                    livereload: true
+                }
+            },
+            
+            scripts: {
+                files: ['src/js/**/*.*'],
+                tasks: ['concat', 'uglify'],
+                options: {
+                    livereload: true
+                }
+            },
+
+            html: {
+                files: ['index.html'],
+                options: {
+                    livereload: true
+                }
+            }
         }
 
     });
@@ -39,6 +73,8 @@ module.exports = function (grunt) {
     grunt.loadNpmTasks('grunt-contrib-concat');
     grunt.loadNpmTasks('grunt-contrib-uglify');
     grunt.loadNpmTasks('grunt-contrib-cssmin');
+    grunt.loadNpmTasks('grunt-contrib-watch');
+    grunt.loadNpmTasks('grunt-contrib-connect');
 
-    grunt.registerTask('default', ['concat', 'uglify', 'cssmin']);
+    grunt.registerTask('default', ['concat', 'uglify', 'cssmin', 'connect:server', 'watch']);
 };

@@ -23,7 +23,7 @@ ShapeProgram.prototype.UpdateAreaAndPerimeter = function (area, perimeter) {
     document.getElementsByClassName('shape-area')[0].innerHTML = area;
     document.getElementsByClassName('shape-perimeter')[0].innerHTML = perimeter;
 };
-
+//alert('test');
 ShapeProgram.prototype.DisplayShape = function (shapeObj, shapeColorParams, shapeParams) {
     var shape;
 
