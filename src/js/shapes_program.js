@@ -48,8 +48,8 @@ ShapeProgram.prototype.GetFormCollection =  function ()
 
 ShapeProgram.prototype.ResetForm = function ()
 {
-    let controlForms = this.GetFormCollection();
-    for (let formName in controlForms)
+    var controlForms = this.GetFormCollection();
+    for (var formName in controlForms)
     {
         controlForms[formName].style.display = "none";
     }
@@ -63,7 +63,7 @@ ShapeProgram.prototype.UpdateAreaAndPerimeter = function (area, perimeter)
 
 ShapeProgram.prototype.DisplayShape = function (shapeObj, shapeColorParams, shapeParams)
 {
-    let shape;
+    var shape;
 
     try
     {
