@@ -1,5 +1,3 @@
-'use strict';
-
 function CTriangle(shapeColorParams, shapeParams) {
     CShape.apply(this, arguments);
 
@@ -54,13 +52,19 @@ CTriangle.prototype.calculateSides = function() {
 };
 
 CTriangle.prototype.calculateArea = function() {
-    let [a, b, c] = this.calculateSides();
-    let perimeter = this.calculatePerimeter();
+    var sides = this.calculateSides(),
+        a = sides[0],
+        b = sides[1],
+        c = sides[2];
+    var perimeter = this.calculatePerimeter();
     return parseFloat((Math.sqrt(perimeter * (perimeter - a) * (perimeter - b) * (perimeter - c))).toFixed(2));
 };
 
 CTriangle.prototype.calculatePerimeter = function() {
-    let [a, b, c] = this.calculateSides();
+    var sides = this.calculateSides(),
+        a = sides[0],
+        b = sides[1],
+        c = sides[2];
     return parseFloat((2 * (a + b + c)).toFixed(2));
 };
 

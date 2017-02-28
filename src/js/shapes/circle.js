@@ -1,5 +1,3 @@
-'use strict';
-
 function CCircle(shapeColorParams, shapeParams) {
     CShape.apply(this, arguments);
 

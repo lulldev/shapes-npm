@@ -1,5 +1,3 @@
-'use strict';
-
 function CShape(shapeColorParams) {
     if (shapeColorParams === undefined)
     {
@@ -27,7 +25,7 @@ CShape.prototype.validateColorParams = function(shapeColorParams) {
 };
 
 CShape.prototype.validateColor = function(expectedHexColor) {
-    let regex = new RegExp('^(#)((?:[A-Fa-f0-9]{3}){1,2})$');
+    var regex = new RegExp('^(#)((?:[A-Fa-f0-9]{3}){1,2})$');
     return regex.test(expectedHexColor);
 };
 

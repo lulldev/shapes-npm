@@ -1,9 +1,5 @@
-'use strict';
-
-function ShapeProgram(canvasAreaId)
-{
-    canvasAreaId === undefined ?
-        this.canvasAreaId = "canvas-area" : this.canvasAreaId = canvasArea;
+function ShapeProgram (canvasAreaId) {
+    canvasAreaId === undefined ? this.canvasAreaId = "canvas-area" : this.canvasAreaId = canvasAreaId;
 
     this.LoadScript('js/shapes/shape.js');
     this.LoadScript('js/shapes/circle.js');
@@ -18,8 +14,7 @@ function ShapeProgram(canvasAreaId)
  Loader solution by joshuamabina
  http://stackoverflow.com/questions/950087/how-do-i-include-a-javascript-file-in-another-javascript-file
  */
-ShapeProgram.prototype.LoadScript = function (url, callback)
-{
+ShapeProgram.prototype.LoadScript = function (url, callback) {
     // Adding the script tag to the head as suggested before
     var head = document.getElementsByTagName('head')[0];
     var script = document.createElement('script');
@@ -35,8 +30,7 @@ ShapeProgram.prototype.LoadScript = function (url, callback)
     head.appendChild(script);
 };
 
-ShapeProgram.prototype.GetFormCollection =  function ()
-{
+ShapeProgram.prototype.GetFormCollection = function () {
     return {
         colorForm: document.getElementsByClassName('color-form')[0],
         circleForm: document.getElementsByClassName('circle-form')[0],
@@ -46,31 +40,25 @@ ShapeProgram.prototype.GetFormCollection =  function ()
     };
 };
 
-ShapeProgram.prototype.ResetForm = function ()
-{
+ShapeProgram.prototype.ResetForm = function () {
     var controlForms = this.GetFormCollection();
-    for (var formName in controlForms)
-    {
+    for (var formName in controlForms) {
         controlForms[formName].style.display = "none";
     }
 };
 
-ShapeProgram.prototype.UpdateAreaAndPerimeter = function (area, perimeter)
-{
+ShapeProgram.prototype.UpdateAreaAndPerimeter = function (area, perimeter) {
     document.getElementsByClassName('shape-area')[0].innerHTML = area;
     document.getElementsByClassName('shape-perimeter')[0].innerHTML = perimeter;
 };
 
-ShapeProgram.prototype.DisplayShape = function (shapeObj, shapeColorParams, shapeParams)
-{
+ShapeProgram.prototype.DisplayShape = function (shapeObj, shapeColorParams, shapeParams) {
     var shape;
 
-    try
-    {
+    try {
         shape = new shapeObj(shapeColorParams, shapeParams);
     }
-    catch (e)
-    {
+    catch (e) {
         alert(e.message);
         return;
     }
@@ -79,7 +67,84 @@ ShapeProgram.prototype.DisplayShape = function (shapeObj, shapeColorParams, shap
     this.UpdateAreaAndPerimeter(shape.calculateArea(), shape.calculatePerimeter());
 };
 
+var shapeProgram = new ShapeProgram();
 
+/**
+ * Select shape type and show shape params form
+ */
+document.getElementsByClassName('shape-type')[0].addEventListener("change", function () {
+    var shapeControlForms = shapeProgram.GetFormCollection();
 
+    var selectedType = this.value.toString();
 
+    switch (selectedType) {
+        case "circle":
+            shapeProgram.ResetForm();
+            shapeControlForms.circleForm.style.display = "block";
+            break;
+        case "rectangle":
+            shapeProgram.ResetForm();
+            shapeControlForms.rectangleForm.style.display = "block";
+            break;
+        case "triangle":
+            shapeProgram.ResetForm();
+            shapeControlForms.triangleForm.style.display = "block";
+            break;
+    }
 
+    shapeControlForms.colorForm.style.display = "block";
+    shapeControlForms.actionControl.style.display = "block";
+
+});
+
+/**
+ * Hide all control forms
+ */
+document.getElementsByClassName('reset-configurator')[0].addEventListener("click", function () {
+    shapeProgram.ResetForm();
+});
+
+/**
+ * Draw action
+ */
+document.getElementsByClassName('draw-shape')[0].addEventListener("click", function () {
+    var selectedType = document.getElementsByClassName('shape-type')[0].value.toString();
+    var shapeColorParams = {
+        fillColorValue: document.getElementsByClassName('fill-color')[0].value.toString(),
+        borderColorValue: document.getElementsByClassName('border-color')[0].value.toString()
+    };
+    var shapeParams = {};
+
+    switch (selectedType) {
+        case "circle":
+            shapeParams = {
+                radius: parseFloat(document.getElementsByClassName('radius')[0].value.toString()),
+                centerX: parseFloat(document.getElementsByClassName('circle-x-coord')[0].value.toString()),
+                centerY: parseFloat(document.getElementsByClassName('circle-y-coord')[0].value.toString())
+            };
+            shapeProgram.DisplayShape(CCircle, shapeColorParams, shapeParams);
+
+            break;
+        case "rectangle":
+            shapeParams = {
+                x1: parseFloat(document.getElementsByClassName('rectangle-x1-coord')[0].value.toString()),
+                y1: parseFloat(document.getElementsByClassName('rectangle-y1-coord')[0].value.toString()),
+                x2: parseFloat(document.getElementsByClassName('rectangle-x2-coord')[0].value.toString()),
+                y2: parseFloat(document.getElementsByClassName('rectangle-y2-coord')[0].value.toString())
+            };
+            shapeProgram.DisplayShape(CRectangle, shapeColorParams, shapeParams);
+
+            break;
+        case "triangle":
+            shapeParams = {
+                x1: parseFloat(document.getElementsByClassName('triangle-x1-coord')[0].value.toString()),
+                y1: parseFloat(document.getElementsByClassName('triangle-y1-coord')[0].value.toString()),
+                x2: parseFloat(document.getElementsByClassName('triangle-x2-coord')[0].value.toString()),
+                y2: parseFloat(document.getElementsByClassName('triangle-y2-coord')[0].value.toString()),
+                x3: parseFloat(document.getElementsByClassName('triangle-x3-coord')[0].value.toString()),
+                y3: parseFloat(document.getElementsByClassName('triangle-y3-coord')[0].value.toString())
+            };
+            shapeProgram.DisplayShape(CTriangle, shapeColorParams, shapeParams);
+            break;
+    }
+});

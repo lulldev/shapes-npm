@@ -1,5 +1,3 @@
-'use strict';
-
 function CRectangle(shapeColorParams, shapeParams) {
     CShape.apply(this, arguments);
 
@@ -44,13 +42,13 @@ CRectangle.prototype.calculateSides = function() {
 };
 
 CRectangle.prototype.calculateArea = function() {
-    let [a, b] = this.calculateSides();
-    return parseFloat((a * b).toFixed(2));
+    var sides = this.calculateSides();
+    return parseFloat((sides[0] * sides[1]).toFixed(2));
 };
 
 CRectangle.prototype.calculatePerimeter = function() {
-    let [a, b] = this.calculateSides();
-    return parseFloat((2 * (a + b)).toFixed(2));
+    var sides = this.calculateSides();
+    return parseFloat((2 * (sides[0] + sides[1])).toFixed(2));
 };
 
 CRectangle.prototype.draw = function(canvasAreaId) {
@@ -60,7 +58,9 @@ CRectangle.prototype.draw = function(canvasAreaId) {
     var canvas = document.getElementById(this.canvasAreaId);
     var context = canvas.getContext('2d');
 
-    let [a, b] = this.calculateSides();
+    var sides = this.calculateSides();
+    var a = sides[0],
+        b = sides[1];
 
     context.clearRect(0, 0, canvas.width, canvas.height);
 
