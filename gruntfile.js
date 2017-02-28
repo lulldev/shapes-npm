@@ -72,12 +72,22 @@ module.exports = function (grunt) {
             }
         },
 
+        hash_files: {
+            options: {
+                algorithm: 'md5',
+                numChars: 7,
+                token: '\<hash\>'
+            },
+            files: {
+                '.build/<token>/': ['src/testing', 'src/123'],
+            }
+        },
+
         clean: {
             build: ['.build/shapes.js']
         }
 
     });
-
 
     grunt.loadNpmTasks('grunt-contrib-concat');
     grunt.loadNpmTasks('grunt-contrib-uglify');
@@ -86,6 +96,7 @@ module.exports = function (grunt) {
     grunt.loadNpmTasks('grunt-contrib-connect');
     grunt.loadNpmTasks('grunt-eslint');
     grunt.loadNpmTasks('grunt-contrib-clean');
+    grunt.loadNpmTasks('grunt-hash-files');
 
     grunt.registerTask('default', ['concat', 'uglify', 'cssmin', 'eslint', 'clean', 'connect:server', 'watch']);
 };

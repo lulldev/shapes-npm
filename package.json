@@ -11,6 +11,9 @@
     "grunt-contrib-uglify": "^2.1.0",
     "grunt-contrib-watch": "^1.0.0",
     "grunt-eslint": "^19.0.0",
-    "grunt-file-hash": "^0.1.6"
+    "grunt-hash-files": "^0.1.1"
+  },
+  "scripts": {
+    "start": "grunt"
   }
 }
