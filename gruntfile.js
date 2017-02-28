@@ -43,6 +43,10 @@ module.exports = function (grunt) {
             }
         },
 
+        eslint: {
+            target: ['.build/*.js']
+        },
+
         watch: {
             css: {
                 files: ['src/css/**/*.*'],
@@ -51,10 +55,10 @@ module.exports = function (grunt) {
                     livereload: true
                 }
             },
-            
+
             scripts: {
                 files: ['src/js/**/*.*'],
-                tasks: ['concat', 'uglify'],
+                tasks: ['concat', 'uglify', 'eslint'],
                 options: {
                     livereload: true
                 }
@@ -75,6 +79,7 @@ module.exports = function (grunt) {
     grunt.loadNpmTasks('grunt-contrib-cssmin');
     grunt.loadNpmTasks('grunt-contrib-watch');
     grunt.loadNpmTasks('grunt-contrib-connect');
+    grunt.loadNpmTasks('grunt-eslint');
 
-    grunt.registerTask('default', ['concat', 'uglify', 'cssmin', 'connect:server', 'watch']);
+    grunt.registerTask('default', ['concat', 'uglify', 'cssmin', 'eslint', 'connect:server', 'watch']);
 };
