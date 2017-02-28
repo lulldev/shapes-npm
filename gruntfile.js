@@ -70,9 +70,14 @@ module.exports = function (grunt) {
                     livereload: true
                 }
             }
+        },
+
+        clean: {
+            build: ['.build/shapes.js']
         }
 
     });
+
 
     grunt.loadNpmTasks('grunt-contrib-concat');
     grunt.loadNpmTasks('grunt-contrib-uglify');
@@ -80,6 +85,7 @@ module.exports = function (grunt) {
     grunt.loadNpmTasks('grunt-contrib-watch');
     grunt.loadNpmTasks('grunt-contrib-connect');
     grunt.loadNpmTasks('grunt-eslint');
+    grunt.loadNpmTasks('grunt-contrib-clean');
 
-    grunt.registerTask('default', ['concat', 'uglify', 'cssmin', 'eslint', 'connect:server', 'watch']);
+    grunt.registerTask('default', ['concat', 'uglify', 'cssmin', 'eslint', 'clean', 'connect:server', 'watch']);
 };
