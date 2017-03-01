@@ -1,5 +1,5 @@
 module.exports = function (grunt) {
-
+    
     grunt.initConfig({
         pkg: grunt.file.readJSON('package.json'),
 
@@ -17,14 +17,14 @@ module.exports = function (grunt) {
                 src: [
                     'src/js/**/*.js'
                 ],
-                dest: '.build/shapes.js'
+                dest: 'build/shapes.js'
             }
         },
 
         uglify: {
             build: {
-                src: '.build/shapes.js',
-                dest: '.build/shapes.min.js'
+                src: 'build/shapes.js',
+                dest: 'build/shapes.min.js'
             }
         },
 
@@ -35,7 +35,7 @@ module.exports = function (grunt) {
             },
             target: {
                 files: {
-                    '.build/shapes.min.css': [
+                    'build/shapes.min.css': [
                         'node_modules/bootstrap/dist/css/bootstrap.min.css',
                         'src/css/shapes.css'
                     ]
@@ -44,7 +44,8 @@ module.exports = function (grunt) {
         },
 
         eslint: {
-            target: ['.build/*.js']
+            target: ['build/shapes.js']
+            //quiet: true
         },
 
         watch: {
@@ -79,12 +80,12 @@ module.exports = function (grunt) {
                 token: '\<hash\>'
             },
             files: {
-                '.build/<token>/': ['src/testing', 'src/123'],
+                'build/<token>/': ['src/testing', 'src/123'],
             }
         },
 
         clean: {
-            build: ['.build/shapes.js']
+            build: ['build/shapes.js']
         }
 
     });

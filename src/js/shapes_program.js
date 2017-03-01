@@ -38,7 +38,7 @@ ShapeProgram.prototype.DisplayShape = function (shapeObj, shapeColorParams, shap
     shape.draw(this.canvasAreaId);
     this.UpdateAreaAndPerimeter(shape.calculateArea(), shape.calculatePerimeter());
 };
-
+//console.log('test');
 var shapeProgram = new ShapeProgram();
 
 window.onload = function () {
