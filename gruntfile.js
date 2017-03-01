@@ -43,6 +43,15 @@ module.exports = function (grunt) {
             }
         },
 
+        cachebust: {
+            task: {
+                options: {
+                    assets: ['build/**']
+                },
+                src: ['index.html']
+            }
+        },
+
         eslint: {
             target: ['build/shapes.js']
             //quiet: true
@@ -51,7 +60,7 @@ module.exports = function (grunt) {
         watch: {
             css: {
                 files: ['src/css/**/*.*'],
-                tasks: ['cssmin'],
+                tasks: ['cssmin', /*'bustCache'*/],
                 options: {
                     livereload: true
                 }
@@ -59,30 +68,30 @@ module.exports = function (grunt) {
 
             scripts: {
                 files: ['src/js/**/*.*'],
-                tasks: ['concat', 'uglify', 'eslint'],
+                tasks: ['concat', 'uglify', 'eslint', /*'bustCache'*/],
                 options: {
                     livereload: true
                 }
             },
 
             html: {
-                files: ['index.html'],
+                files: ['index.html', /*'bustCache'*/],
                 options: {
                     livereload: true
                 }
             }
         },
 
-        hash_files: {
-            options: {
-                algorithm: 'md5',
-                numChars: 7,
-                token: '\<hash\>'
-            },
-            files: {
-                'build/<token>/': ['src/testing', 'src/123'],
-            }
-        },
+        //bustCache: {
+        //    build: {
+        //        options: {
+        //            hashType: "timestamp",
+        //            css: true,
+        //            javascript: true
+        //        },
+        //        src: "index.html"
+        //    }
+        //},
 
         clean: {
             build: ['build/shapes.js']
@@ -97,7 +106,16 @@ module.exports = function (grunt) {
     grunt.loadNpmTasks('grunt-contrib-connect');
     grunt.loadNpmTasks('grunt-eslint');
     grunt.loadNpmTasks('grunt-contrib-clean');
-    grunt.loadNpmTasks('grunt-hash-files');
+    //grunt.loadNpmTasks('grunt-bust-cache');
 
-    grunt.registerTask('default', ['concat', 'uglify', 'cssmin', 'eslint', 'clean', 'connect:server', 'watch']);
+    grunt.registerTask('default',
+        ['concat',
+            'uglify',
+            'cssmin',
+            'eslint',
+            'clean',
+            /*'bustCache'*/,
+            'connect:server',
+            'watch']
+    );
 };
